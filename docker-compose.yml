@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  aioserver:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/aioserver.Dockerfile
+    ports:
+      - 1234:8000
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx.Dockerfile
+    depends_on:
+      - aioserver
+    ports:
+      - 80:80
+    restart: always
