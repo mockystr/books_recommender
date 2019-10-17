@@ -6,6 +6,9 @@ from marshmallow import ValidationError
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+books_dict = json.load(open('model/books_dict.json', 'r'))
+books_api = 'https://www.googleapis.com/books/v1'
+
 
 def similar_books(model, v, n=10):
     ms = model.similar_by_vector(v, topn=n + 1)[1:]
@@ -39,7 +42,3 @@ def arguments_params_get(schema, fields=None):
         return inner
 
     return _arguments
-
-
-books_dict = json.load(open('model/books_dict.json', 'r'))
-books_api = 'https://www.googleapis.com/books/v1'
