@@ -3,19 +3,29 @@ import logging
 
 import aiohttp
 import asyncpool
+from marshmallow import ValidationError
 
 from api.utils import books_api
+from api.schemas import GoogleResponseSchema
 
 
-class GetBooksTask:
+class DownloadBooksTask:
+    def __init__(self, books_isbn, many):
+        self.queue = asyncio.Queue()
+        self.books_isbn = books_isbn
+        self.many = bool(many)
+        self.res = [] if self.many else None
+        self.loop = asyncio.get_running_loop()
+
     @staticmethod
     async def handle_response(resp):
-        total_items = resp.get('totalItems')
-        if total_items != 1:
-            print(resp)
+        try:
+            schema_response = GoogleResponseSchema().load(resp)
+            items = schema_response.get('items')[0]
+            volume_info = items.get('volumeInfo')
+        except ValidationError as e:
+            print(e, '\n', resp)
             return
-        items = resp.get('items', [])[0]
-        volume_info = items.get('volumeInfo')
 
         return {
             'title': volume_info.get('title'),
@@ -27,27 +37,35 @@ class GetBooksTask:
             'thumbnail': volume_info.get('imageLinks', {}).get('thumbnail')
         }
 
-
-class GetBooksISBNTask(GetBooksTask):
-    def __init__(self, books_ids):
-        self.queue = asyncio.Queue()
-        self.books_ids = books_ids
-        self.res = []
-        self.loop = asyncio.get_running_loop()
-
-    async def rec_link_worker(self, session, book_isbn):
+    async def link_worker(self, session, book_isbn):
         async with session.get(f'{books_api}/volumes',
                                params={'q': f'isbn:{book_isbn}'}) as resp:
-            self.res.append(await self.handle_response(await resp.json()))
+            handled_resp = await self.handle_response(await resp.json())
+
+            if self.many:
+                if handled_resp:
+                    self.res.append(handled_resp)
+            else:
+                self.res = handled_resp
 
     async def main(self):
         async with aiohttp.ClientSession() as session:
             async with asyncpool.AsyncPool(self.loop, num_workers=10,
                                            name="RecPool",
                                            logger=logging.getLogger("RecPool"),
-                                           worker_co=self.rec_link_worker,
+                                           worker_co=self.link_worker,
                                            max_task_time=300) as pool:
-                for book in self.books_ids:
-                    await pool.push(session, book)
+                for isbn in self.books_isbn:
+                    await pool.push(session, isbn)
 
         return self.res
+
+
+class ListBooksISBNTask(DownloadBooksTask):
+    def __init__(self, books_isbn):
+        super().__init__(books_isbn, many=True)
+
+
+class GetBookISBNTask(DownloadBooksTask):
+    def __init__(self, book_isbn):
+        super().__init__([book_isbn], many=False)

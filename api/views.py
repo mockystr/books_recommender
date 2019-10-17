@@ -1,28 +1,24 @@
-from marshmallow import ValidationError
+import random
 
-from api.schemas import GetRecommendationSchema
-from api.utils import json_response, similar_books
-from api.tasks import GetBooksISBNTask
+from api.schemas import GetBookSchema
+from api.utils import json_response, similar_books, arguments_params_get
+from api.tasks import ListBooksISBNTask, GetBookISBNTask
 
 
-async def recommend(request):
-    schema = GetRecommendationSchema()
-    try:
-        r = schema.load({**request.query})
-        book_id = r.get('book_id')
-    except ValidationError as e:
-        return json_response(data={
-            'reason': e.messages,
-            'message': 'bad_request'
-        }, status=400)
-
+@arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])
+async def get_recommendation(request, book_isbn):
     model = request.app['model']
-    books_ids = similar_books(model, model[book_id])
-    res = await GetBooksISBNTask(books_ids).main()
-    return json_response({'similar': [i for i in res if i]})
+    books_ids = similar_books(model, model[book_isbn])
+    return json_response({'books': await ListBooksISBNTask(books_ids).main()})
 
 
-async def get_random_books(request):
-    books_number = 15
-    random_books = []
-    return json_response({'books': random_books})
+@arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])
+async def get_book(request, book_isbn):
+    return json_response({'book': await GetBookISBNTask(book_isbn).main()})
+
+
+async def list_random_books(request):
+    books_isbn = list(request.app['books_dict'])
+    random_indexes = random.sample(range(len(books_isbn)), 15)
+    random_isbn = [books_isbn[i] for i in random_indexes]
+    return json_response({'books': await ListBooksISBNTask(random_isbn).main()})

@@ -1,14 +1,17 @@
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import Schema, fields, ValidationError, EXCLUDE
 from api.utils import books_dict
 
 
-def validate_book_id(value):
+def validate_book_isbn(value):
     if not books_dict.get(value, None):
-        raise ValidationError("Wrong book_id is given")
+        raise ValidationError("Wrong book isbn is given")
 
 
-class GetRecommendationSchema(Schema):
-    book_id = fields.Str(required=True, validate=validate_book_id)
+class GetBookSchema(Schema):
+    class Meta:
+        unknown = EXCLUDE
+
+    book_isbn = fields.Str(required=True, validate=validate_book_isbn)
 
 
 def validate_total_items(value):
@@ -16,16 +19,16 @@ def validate_total_items(value):
         raise ValidationError("Total items must be 1")
 
 
-class RecommendImageLinksSchema(Schema):
+class GoogleImageLinksSchema(Schema):
     class Meta:
-        strict = True
+        unknown = EXCLUDE
 
     thumbnail = fields.Str(required=True)
 
 
-class RecommendVolumeInfoSchema(Schema):
+class GoogleVolumeInfoSchema(Schema):
     class Meta:
-        strict = True
+        unknown = EXCLUDE
 
     title = fields.Str(required=True)
     subtitle = fields.Str(required=False)
@@ -33,27 +36,19 @@ class RecommendVolumeInfoSchema(Schema):
     description = fields.Str(required=False)
     pageCount = fields.Int(required=False)
     categories = fields.List(fields.Str(), required=False)
-    imageLinks = fields.Nested(RecommendImageLinksSchema, load_only=True,
-                               only=('thumbnail',))
+    imageLinks = fields.Nested(GoogleImageLinksSchema)
 
 
-class RecommendItemsSchema(Schema):
+class GoogleItemsSchema(Schema):
     class Meta:
-        strict = True
+        unknown = EXCLUDE
 
-    volumeInfo = fields.Nested(
-        RecommendVolumeInfoSchema,
-        load_only=True,
-        only=('title', 'subtitle', 'publishedDate', 'description',
-              'description', 'pageCount', 'categories', 'imageLinks')
-    )
+    volumeInfo = fields.Nested(GoogleVolumeInfoSchema)
 
 
-class RecommendLinkSchema(Schema):
+class GoogleResponseSchema(Schema):
     class Meta:
-        strict = True
+        unknown = EXCLUDE
 
     totalItems = fields.Int(validate=validate_total_items)
-    items = fields.Nested(RecommendItemsSchema, many=True, load_only=True,
-                          only=('volumeInfo',))
-    kind = fields.Str()
+    items = fields.Nested(GoogleItemsSchema, many=True)
