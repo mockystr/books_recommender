@@ -5,15 +5,9 @@ from aiohttp import web
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def similar_books(model, v, n=15):
+def similar_books(model, v, n=10):
     ms = model.similar_by_vector(v, topn=n + 1)[1:]
-
-    new_ms = []
-    for j in ms:
-        pair = (books_dict[j[0]][0], j[1])
-        new_ms.append(pair)
-
-    return new_ms
+    return [i[0] for i in ms]
 
 
 def json_response(data, status=200):
@@ -23,3 +17,4 @@ def json_response(data, status=200):
 
 
 books_dict = json.load(open('model/books_dict.json', 'r'))
+books_api = 'https://www.googleapis.com/books/v1'

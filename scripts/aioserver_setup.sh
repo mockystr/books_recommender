@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-python -m api.main
+python -m api
