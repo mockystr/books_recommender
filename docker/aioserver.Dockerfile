@@ -9,5 +9,6 @@ RUN pip install -r /requirements.txt
 WORKDIR /code
 COPY . .
 
+
 EXPOSE 8080
 CMD ["./scripts/aioserver_setup.sh"]
