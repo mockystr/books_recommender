@@ -9,13 +9,13 @@ services:
     ports:
       - 1234:8000
 
-  front:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./docker/front.Dockerfile
-    ports:
-      - 81:81
+#  front:
+#    restart: always
+#    build:
+#      context: .
+#      dockerfile: ./docker/front.Dockerfile
+#    ports:
+#      - 81:81
 
   nginx:
     build:
