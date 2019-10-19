@@ -8,8 +8,8 @@ from api.tasks import ListBooksISBNTask, GetBookISBNTask
 @arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])
 async def get_recommendation(request, book_isbn):
     model = request.app['model']
-    books_ids = similar_books(model, model[book_isbn])
-    return json_response({'books': await ListBooksISBNTask(books_ids).main()})
+    books_isbn = similar_books(model, model[book_isbn])
+    return json_response({'books': await ListBooksISBNTask(books_isbn).main()})
 
 
 @arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])

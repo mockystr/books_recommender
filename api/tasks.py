@@ -18,7 +18,7 @@ class DownloadBooksTask:
         self.loop = asyncio.get_running_loop()
 
     @staticmethod
-    async def handle_response(resp):
+    async def handle_response(resp, book_isbn):
         try:
             schema_response = GoogleResponseSchema().load(resp)
             items = schema_response.get('items')[0]
@@ -28,6 +28,7 @@ class DownloadBooksTask:
             return
 
         return {
+            'book_isbn': book_isbn,
             'title': volume_info.get('title'),
             'subtitle': volume_info.get('subtitle'),
             'publishedDate': volume_info.get('publishedDate'),
@@ -40,7 +41,8 @@ class DownloadBooksTask:
     async def link_worker(self, session, book_isbn):
         async with session.get(f'{books_api}/volumes',
                                params={'q': f'isbn:{book_isbn}'}) as resp:
-            handled_resp = await self.handle_response(await resp.json())
+            handled_resp = await self.handle_response(await resp.json(),
+                                                      book_isbn)
 
             if self.many:
                 if handled_resp:
