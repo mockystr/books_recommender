@@ -22,9 +22,14 @@ class DownloadBooksTask:
     async def handle_response(resp, book_isbn):
         try:
             schema_response = GoogleResponseSchema().load(resp)
+        except ValidationError as e:
+            print(e, resp, book_isbn)
+            return
+
+        try:
             items = schema_response.get('items')[0]
             volume_info = items.get('volumeInfo')
-        except ValidationError as e:
+        except (TypeError, KeyError) as e:
             print(e, resp, book_isbn)
             return
 
