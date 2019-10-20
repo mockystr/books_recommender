@@ -8,7 +8,14 @@ from api.tasks import ListBooksISBNTask, GetBookISBNTask
 @arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])
 async def get_recommendation(request, book_isbn):
     model = request.app['model']
-    books_isbn = similar_books(model, model[book_isbn])
+    try:
+        books_isbn = similar_books(model, model[book_isbn])
+    except:
+        return json_response({
+            'message': 'Error while trying get similar books.'
+            f'Maybe ISBN {book_isbn} not in vocabulary',
+            'status': 'error'
+        }, status=400)
     res = await ListBooksISBNTask(books_isbn).main()
     return json_response({'books': res})
 
