@@ -4,6 +4,7 @@ import os
 
 import aiohttp
 import asyncpool
+from marshmallow import ValidationError
 
 from api.utils import books_api
 from api.schemas import GoogleResponseSchema
@@ -21,12 +22,10 @@ class DownloadBooksTask:
     async def handle_response(resp, book_isbn):
         try:
             schema_response = GoogleResponseSchema().load(resp)
-            print(schema_response.get('items'))
             items = schema_response.get('items')[0]
             volume_info = items.get('volumeInfo')
-        except Exception as e:
-            print(e, resp)
-            # print(e, '\n', resp, '\n', book_isbn)
+        except ValidationError as e:
+            print(e, resp, book_isbn)
             return
 
         return {
