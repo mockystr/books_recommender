@@ -113,7 +113,7 @@ media
 /*.log
 .vscode
 /static
-
+prod/conf/
 model/.ipynb_checkpoints
 model/BX-Book-Ratings.csv
 model/BX-Book-Ratings.csv

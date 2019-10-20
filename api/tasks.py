@@ -1,9 +1,9 @@
 import asyncio
 import logging
+import os
 
 import aiohttp
 import asyncpool
-from marshmallow import ValidationError
 
 from api.utils import books_api
 from api.schemas import GoogleResponseSchema
@@ -21,10 +21,12 @@ class DownloadBooksTask:
     async def handle_response(resp, book_isbn):
         try:
             schema_response = GoogleResponseSchema().load(resp)
+            print(schema_response.get('items'))
             items = schema_response.get('items')[0]
             volume_info = items.get('volumeInfo')
-        except ValidationError as e:
-            print(e, '\n', resp)
+        except Exception as e:
+            print(e, resp)
+            # print(e, '\n', resp, '\n', book_isbn)
             return
 
         return {
@@ -39,8 +41,12 @@ class DownloadBooksTask:
         }
 
     async def link_worker(self, session, book_isbn):
+        link_params = {
+            'q': f'isbn:{book_isbn}',
+            'key': os.getenv('GOOGLE_API_KEY', '')
+        }
         async with session.get(f'{books_api}/volumes',
-                               params={'q': f'isbn:{book_isbn}'}) as resp:
+                               params=link_params) as resp:
             handled_resp = await self.handle_response(await resp.json(),
                                                       book_isbn)
 

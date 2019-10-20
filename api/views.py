@@ -9,7 +9,8 @@ from api.tasks import ListBooksISBNTask, GetBookISBNTask
 async def get_recommendation(request, book_isbn):
     model = request.app['model']
     books_isbn = similar_books(model, model[book_isbn])
-    return json_response({'books': await ListBooksISBNTask(books_isbn).main()})
+    res = await ListBooksISBNTask(books_isbn).main()
+    return json_response({'books': res})
 
 
 @arguments_params_get(schema=GetBookSchema, fields=['book_isbn'])
@@ -22,4 +23,5 @@ async def list_random_books(request):
     books_isbn = list(request.app['books_dict'])
     random_indexes = random.sample(range(len(books_isbn)), books_count)
     random_isbn = [books_isbn[i] for i in random_indexes]
-    return json_response({'books': await ListBooksISBNTask(random_isbn).main()})
+    res = await ListBooksISBNTask(random_isbn).main()
+    return json_response({'books': res})

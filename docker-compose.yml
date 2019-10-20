@@ -8,6 +8,8 @@ services:
       dockerfile: ./docker/aioserver.Dockerfile
     ports:
       - 1234:8000
+    env_file:
+      - prod/conf/prod.env
 
   nginx:
     build:
