@@ -11,10 +11,13 @@ chardet==3.0.4
 docutils==0.15.2
 gensim==3.8.1
 idna==2.8
+isbnlib==3.9.9
+isbntools==4.3.20
 jmespath==0.9.4
 marshmallow==3.2.1
 multidict==4.5.2
 numpy==1.17.2
+pandas==0.25.2
 python-dateutil==2.8.0
 pytz==2019.3
 requests==2.22.0

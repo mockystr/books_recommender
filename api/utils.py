@@ -1,11 +1,15 @@
 import functools
 import json
 import os
+
+import pandas as pd
+
 from aiohttp import web
 from marshmallow import ValidationError
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+books_data = pd.read_csv('model/books_data.csv')
 books_dict = json.load(open('model/books_dict.json', 'r'))
 books_api = 'https://www.googleapis.com/books/v1'
 

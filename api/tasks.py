@@ -4,6 +4,8 @@ import os
 
 import aiohttp
 import asyncpool
+import pandas as pd
+
 from marshmallow import ValidationError
 
 from api.utils import books_api
@@ -73,11 +75,54 @@ class DownloadBooksTask:
         return self.res
 
 
-class ListBooksISBNTask(DownloadBooksTask):
+class ListGoogleBooksISBNTask(DownloadBooksTask):
     def __init__(self, books_isbn):
         super().__init__(books_isbn, many=True)
 
 
-class GetBookISBNTask(DownloadBooksTask):
+class GetGoogleBookISBNTask(DownloadBooksTask):
     def __init__(self, book_isbn):
         super().__init__([book_isbn], many=False)
+
+
+class FromFileTask:
+    def __init__(self, books_data):
+        self.books_data = books_data
+        self.res = []
+
+    def handle_row(self, row):
+        return self.res.append({
+            'book_isbn': row['ISBN'],
+            'title': row['book_title'],
+            'book_author': row['book_author'],
+            'image_url': row['image_url'],
+            'publication_year': row['publication_year'],
+            'publisher': row['publisher']
+        })
+
+
+class ListRandomFromFileTask(FromFileTask):
+    def __init__(self, books_data, books_count):
+        super().__init__(books_data)
+        self.books_count = books_count
+
+    def main(self):
+        random_samples = self.books_data.sample(n=self.books_count)
+        random_books = []
+        for index, row in random_samples.iterrows():
+            random_books.append(self.handle_row(row))
+        return self.res
+
+
+class ListBooksFromFileByISBNTask(FromFileTask):
+    def __init__(self, books_data, books_isbn):
+        super().__init__(books_data)
+        self.books_isbn = books_isbn
+
+    def main(self):
+        books = self.books_data[self.books_data['ISBN'].isin(self.books_isbn)]
+
+        handled_books = []
+        for index, row in books.iterrows():
+            handled_books.append(self.handle_row(row))
+        return self.res
