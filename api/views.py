@@ -20,7 +20,7 @@ async def get_recommendation(request, book_isbn):
         }, status=400)
     else:
         books_data = request.app['books_data']
-        res = await ListBooksFromFileByISBNTask(books_data, books_isbn).main()
+        res = ListBooksFromFileByISBNTask(books_data, books_isbn).main()
         return json_response({'books': res})
 
 
