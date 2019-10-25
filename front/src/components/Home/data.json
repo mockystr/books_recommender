@@ -1,0 +1,100 @@
+{
+  "books": [
+    {
+      "book_isbn": "2266080598",
+      "title": "Le scaphandre et le papillon",
+      "subtitle": null,
+      "publishedDate": "1998",
+      "description": "Suite à un accident vasculaire, J.-D. Bauby, rédacteur en chef de \"Elle\", sombre dans un état appelé \"locked-in syndrom\" : de son corps inerte, seul un oeil bouge, le gauche. Cet oeil est son lien avec le monde ; c'est avec lui qu'il a écrit ce livre, nous envoyant des cartes postales d'un monde que nous ne pouvons imaginer.",
+      "page_count": 139,
+      "categories": [
+        "Cerebrovascular disease"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=TTb5HwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "0151327653",
+      "title": "Foucault's Pendulum",
+      "subtitle": null,
+      "publishedDate": "1989",
+      "description": "A wily group of editors devises a mock formula for tapping the mystical powers of the universe, only to set off a series of mysterious disappearances",
+      "page_count": 641,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=-FtdAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "0843945656",
+      "title": "The Switch",
+      "subtitle": null,
+      "publishedDate": "1999",
+      "description": "While taking turns with her twin sister masquerading as a man to escape the clutches of an evil uncle, a young aristocrat learns the true joy of being a woman.",
+      "page_count": 362,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=DBQEAAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "042513329X",
+      "title": "The Seventh Commandment",
+      "subtitle": null,
+      "publishedDate": "1992",
+      "description": "When a wealthy jeweler is stabbed on the streets of New York City, insurance investigator Dora Conti investigates the family's claim and discovers scandal, corruption, addiction, and adultery in the Conti family. Reprint.",
+      "page_count": 357,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=TL9MYV189CQC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "067103264X",
+      "title": "Storm of the Century",
+      "subtitle": "The Labor Day Hurricane of 1935",
+      "publishedDate": "1999-02-01",
+      "description": "Complemented by an author introduction, the screenplay for a six-hour television miniseries follows the residents of Little Tall Island as they prepare to cope with both a dangerous storm and an mysteriously evil force",
+      "page_count": 376,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=wj38LXnBk9oC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+      "book_isbn": "0312968930",
+      "title": "Too Wicked To Love",
+      "subtitle": null,
+      "publishedDate": "1999-04-15",
+      "description": "When Miss Jane Mayhew discovers the love child of the Earl of Chasebourne, Ethan Sinclair, she is determined to see the arrogant aristocrat face his responsibility, but the last thing Ethan wants is to become involved with the prim and proper Jane. Original.",
+      "page_count": 334,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=3hoZ3z0MC70C&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "0345343697",
+      "title": "Off for the Sweet Hereafter",
+      "subtitle": null,
+      "publishedDate": "1987",
+      "description": "The author returns to the mythic environs of Neely, North Carolina, to tell the modern Bonnie and Clyde story of Raeford Benton Lynch and Jane Elizabeth Firesheets",
+      "page_count": 339,
+      "categories": [
+        "Fiction"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=VorQEN2LhP8C&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+      "book_isbn": "0020418809",
+      "title": "Caddie Woodlawn",
+      "subtitle": null,
+      "publishedDate": "1970",
+      "description": "The adventures of an eleven-year-old tomboy growing up on the Wisconsin frontier in the mid-nineteenth century.",
+      "page_count": 242,
+      "categories": [
+        "Blind"
+      ],
+      "thumbnail": "http://books.google.com/books/content?id=CZ_ZAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    }
+  ]
+}

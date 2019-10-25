@@ -1,0 +1,18 @@
+.books {
+  position: relative;
+  width: 80%;
+  margin: 0 auto 32px auto;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space:nowrap;
+  background: #f7f7f7;
+  padding: 8px;
+  border-radius: 15px;
+  box-shadow: 0 0 1px black;
+}
+.title {
+  width: 80%;
+  margin: 32px auto auto auto;
+  padding-left: 8px;
+  color: #6c757d;
+}

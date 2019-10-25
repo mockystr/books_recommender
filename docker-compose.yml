@@ -10,13 +10,28 @@ services:
       - 1234:8000
     env_file:
       - prod/conf/prod.env
+  client:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/client.Dockerfile
+    ports:
+      - 8899:3000
+#    environment:
+#      - NODE_ENV=production
+#      - USE_LOCALHOST=1
+#      - LOCALHOST_ADDRESS="http://localhost:8000"
+#      - REMOTE_ADDRESS="http://178.128.196.37:1234"
+    image: docker_recommender-client
+    depends_on:
+      - aioserver
 
   nginx:
     build:
       context: .
       dockerfile: ./docker/nginx.Dockerfile
     depends_on:
-      - aioserver
+      - client
     ports:
       - 80:80
     restart: always

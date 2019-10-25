@@ -1,0 +1,19 @@
+.book {
+  display: inline-block!important;
+  height: auto;
+  width: 250px;
+  overflow: hidden;
+  vertical-align: top;
+  margin: 0 16px;
+  box-shadow: 0 0 1px black;
+  p, h5 {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  img {
+    height: 300px;
+  }
+}

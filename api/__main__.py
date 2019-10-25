@@ -18,4 +18,4 @@ async def create_app():
     return app
 
 
-web.run_app(create_app(), port=int(os.environ.get('SERVER_PORT', 8000)))
+web.run_app(create_app(), port=8000)

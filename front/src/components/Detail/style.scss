@@ -1,0 +1,21 @@
+.book {
+  display: grid;
+  width: 80%;
+  margin: 64px auto;
+  grid-template-columns: 1fr 1fr;
+  .img {
+    img {
+      display: block;
+      border: 1px solid #efefef;
+      height: 500px;
+      margin: auto;
+      border-radius: 5px;
+      box-shadow: 1px 1px 3px #7f7f7f;
+    }
+  }
+  .about {
+    span {
+      cursor: pointer;
+    }
+  }
+}
