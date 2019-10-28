@@ -10,7 +10,8 @@ import Book from "../Book";
 class Home extends Component {
     componentDidMount() {
         getRandomBooks().then((r)=>{
-            this.props.getRandomBooks(this.props.randomBooks.concat(r.data.books.length !== 0 ? r.data.books : books));
+            this.props.getRandomBooks(this.props.randomBooks.concat(r.data.books));
+            console.log(r)
         }).catch((e)=>{
             this.props.getRandomBooks(books);
             console.log(e)
@@ -31,12 +32,6 @@ class Home extends Component {
     render(props, state, context) {
         return (
             <div>
-                <h1 className={style.title}>Рекомендации</h1>
-                <div className={style.books}>
-                    {props.recommendedBooks.length !== 0 ? props.recommendedBooks.map((item, key) => (
-                        <Book item={item} key={key}/>
-                    )) : 'Пусто'}
-                </div>
                 <h1 className={style.title}>Книги</h1>
                 <div className={style.books}>
                     {props.randomBooks.length !== 0 ? props.randomBooks.map((item, key) => (

@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -13,10 +12,6 @@ module.exports = {
             chunkFilename: '[id].css',
             ignoreOrder: false,
         }),
-        new HtmlWebpackPlugin({
-            template: path.resolve('./index.html')
-        }),
-        new webpack.EnvironmentPlugin(['NODE_ENV', 'USE_LOCALHOST', 'LOCALHOST_ADDRESS', 'REMOTE_ADDRESS'])
     ],
     module: {
         rules: [{
@@ -90,8 +85,6 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase: path.join(__dirname, './build'),
-        compress: true,
         // host: '0.0.0.0',
         watchOptions: {aggregateTimeout: 300, poll: 1000},
         headers: {
