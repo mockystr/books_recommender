@@ -64,8 +64,6 @@ class Detail extends Component {
                                 <h5>{state.book.publisher}</h5>
                                 <h6>{state.book.publication_year}</h6>
                                 <hr/>
-                                <span className={state.isLiked ? "btn btn-outline-danger" : "btn btn-outline-success"}
-                                      onClick={this.like}>{state.isLiked ? "Не нравится" : "Нравится"}</span>
                             </div>
                         </div>
                         <h1 className={homeStyle.title}>Рекомендации</h1>
