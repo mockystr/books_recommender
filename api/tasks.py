@@ -4,7 +4,6 @@ import os
 
 import aiohttp
 import asyncpool
-import pandas as pd
 
 from marshmallow import ValidationError
 

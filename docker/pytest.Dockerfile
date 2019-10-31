@@ -7,7 +7,6 @@ WORKDIR /code
 COPY api api
 COPY model model
 COPY scripts scripts
+COPY tests tests
 
-
-EXPOSE 1234
-CMD ["./scripts/aioserver_setup.sh"]
+CMD ["pytest", "tests", "-vv"]
