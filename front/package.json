@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "history": "^4.10.1",
     "jsonp": "^0.2.1",
     "preact": "^10.0.1",
